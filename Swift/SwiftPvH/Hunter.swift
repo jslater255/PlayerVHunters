@@ -10,25 +10,26 @@ class Hunter: Player
     
     func Move()
     {
-        // Have to move to the Hunters to the top corner
-        var move:UInt32 = arc4random_uniform(4);
+        // Hunter only move up(1) or left(3)
+        var randomMove:uint32 = (arc4random_uniform(2) == 0 ? 3 : 1 )
         
-        // move is right and already on the edge
-        if( (self.playerPlace.xPos == 9) && ( move == 2 ) )
+        // if we are at the edge on the left of the grid then move up.
+        if(self.playerPlace.xPos == 0)
         {
-            // move left
-            move = 1;
-        }
-        if ( (move == 3) && (self.playerPlace.yPos == 9)  )
-        {
-            move = 4;
+            randomMove = 3;
         }
         
-        self.Move(direction: move);
+        if( self.playerPlace.yPos == 0 )
+        {
+            randomMove = 1;
+        }
+        
+        super.Move(direction: randomMove);
     }
     
     func ResetHunter()
     {
+        // Starting position
         playerPlace.xPos = 9;
         playerPlace.yPos = 9;
     }

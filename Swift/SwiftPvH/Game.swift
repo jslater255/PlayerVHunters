@@ -29,7 +29,7 @@ class Game
         while(true)
         {
             // Print the Grid with the play on it
-            grid.printGrid(game: self);
+            grid.printGrid(game: self,level: self.level, health: self.player.GetHealth());
             
             // Take movemnt from the user
             // use arrows?
@@ -45,7 +45,7 @@ class Game
                 {
                     break;
                 }
-                hunter.RandomMove();
+                hunter.Move();
                 
                 // Make sure no hunter is matching the Player
                 if ( !hitTaken && player.Collision(Pos: hunter.playerPlace) )
@@ -57,8 +57,9 @@ class Game
                     // Only take one hit per round
                     hitTaken = true
                 }
+                
                 // Any hunter has now reached the end reset them back to the start
-                else if ( hunter.Finished() )
+                if ( hunter.Finished() )
                 {
                     hunter.ResetHunter();
                     self.level = self.level + 1;
@@ -68,7 +69,23 @@ class Game
                 // Level 10 == 10 hunters moving
                 idx = idx + 1 ;
             }
-        }// End of for loop
+            
+            // check the players health
+            // if <= 0 Game Over
+            if( self.player.GetHealth() <= 0  )
+            {
+                break;
+            }
+            
+        }// End of while loop
+        
+        grid.printBreak();
+        print("Game Over....");
+        print("Your Score: \(self.level)");
+        grid.printBreak();
+        print("");
+        // Now pass the Level to the Leaderboard and see if they are on it.
+        
     }
     
     func printPH(x:Int, y:Int) -> String

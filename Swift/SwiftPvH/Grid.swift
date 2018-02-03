@@ -4,30 +4,30 @@ class Grid
 {
     var grid_dimension = 9;
     
-    func printGrid(game : Game)
+    func printGrid(game: Game, level: UInt, health: Int)
     {
         print("");
-        self.topper(health: 10,level: 1);
+        self.topper(health: health,level: level);
         for idx in 0...grid_dimension
         {
-            print("|",terminator: "")
+            print("|",terminator: "")// no endl
             for jdx in 0...grid_dimension
             {
-                print(game.printPH(x: jdx, y: idx), terminator: "");
+                print(game.printPH(x: jdx, y: idx), terminator: ""); // no endl
             }
-            print("");
+            print("");// endl
         }
-        print("Footer");
+        printBreak();
     }
     
-    func topper(health: Int, level: Int)
+    func topper(health: Int, level: UInt)
     {
-        print("********************");
+        printBreak();
         print("Health: \(health)  Level: \(level)");
     }
     
-    func footer()
+    func printBreak()
     {
-        print("********************");
+        print("*********************");
     }
 }
